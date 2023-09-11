@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }) {
       domain="dev-358ojbrhhp0stp2h.eu.auth0.com"
       clientId="lN9y3qvUBhx51LO6w4QuDUGYyaqGXomi"
       authorizationParams={{
-        redirect_uri: '/',
+        redirect_uri: 'window.location.origin',
       }}
       useRefreshTokens={true}
       cacheLocation="localstorage"
