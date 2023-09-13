@@ -1,3 +1,5 @@
+
+
 import '@/styles/globals.css'
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { ConvexProviderWithAuth0 } from "convex/react-auth0";
@@ -11,7 +13,7 @@ export default function App({ Component, pageProps }) {
       domain="dev-358ojbrhhp0stp2h.eu.auth0.com"
       clientId="lN9y3qvUBhx51LO6w4QuDUGYyaqGXomi"
       authorizationParams={{
-        redirect_uri: 'window.location.origin',
+        redirect_uri: typeof window === "undefined" ?  undefined : window.location.origin,
       }}
       useRefreshTokens={true}
       cacheLocation="localstorage"

@@ -1,3 +1,5 @@
+'use client'
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LogoutButton() {
@@ -5,7 +7,7 @@ export default function LogoutButton() {
   return (
     <button
       onClick={() =>
-        logout({ logoutParams: { returnTo: 'window.location.origin' } })
+        logout({ logoutParams: { returnTo: typeof window === "undefined" ?  undefined : window.location.origin } })
       }
     >
       Log out
