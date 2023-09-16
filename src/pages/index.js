@@ -1,12 +1,12 @@
-import LoginButton from '../pages/login/login';
-import LogoutButton from '../pages/logout/logout';
+import styles from '@/styles/Layout.module.css';
+import Lobby from './components/lobby';
 import { useConvexAuth } from "convex/react";
 
 export default function Home() {
   const { isLoading, isAuthenticated } = useConvexAuth();
   return (
     <>
-      {isLoading ? 'Loading...' : isAuthenticated ? <LogoutButton /> : <LoginButton />}
+      {isAuthenticated ? <Lobby /> : <div className={styles.title}>Oceans5</div>}
     </>
   )
 }

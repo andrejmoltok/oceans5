@@ -1,0 +1,10 @@
+.lobby {
+    width: 1004px;
+    height: 500px;
+    margin: auto;
+    border: 2px solid gray;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 70px;
+}

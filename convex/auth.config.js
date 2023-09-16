@@ -1,8 +1,8 @@
 export default {
     providers: [
       {
-        domain: "dev-358ojbrhhp0stp2h.eu.auth0.com",
-        applicationID: "lN9y3qvUBhx51LO6w4QuDUGYyaqGXomi",
+        domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN,
+        applicationID: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
       },
     ]
   };

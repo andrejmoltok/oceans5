@@ -1,0 +1,26 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+}
+
+.navlist {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: space-evenly;
+    padding-left: 0;
+}
+
+.listitem {
+    width: 220px;
+    text-align: center;
+}
+
+.title {
+    margin: auto;
+    width: 100%;
+    
+}
