@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
   return (
     <>
-      {isAuthenticated ? <>{router.push('/lobby')}</> : <><div className={styles.logo}>Oceans5</div></>}
+      <><div className={styles.logo}>Oceans5</div></>
     </>
   )
 }

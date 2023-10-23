@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^4.26.6",
     "@clerk/nextjs": "^4.25.1",
     "convex": "^1.2.1",
+    "create-next-app": "^13.5.6",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
+    "next": "^13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "^3.22.2"
