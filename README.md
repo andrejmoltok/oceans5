@@ -1,5 +1,5 @@
 # Oceans 5
 
-### A WebDevCody hackathon entry
+### A learning collab rpoject
 
-Sponsored by [Convex.dev](https://convex.dev)
+Powered by [Convex.dev](https://convex.dev)
