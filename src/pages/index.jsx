@@ -1,12 +1,13 @@
 import styles from '@/styles/Home.module.css';
-import Lobby from './components/lobby';
+import { useRouter } from 'next/router';
 import { useConvexAuth } from "convex/react";
 
 export default function Home() {
   const { isLoading, isAuthenticated } = useConvexAuth();
+  const router = useRouter();
   return (
     <>
-      {isAuthenticated ? <Lobby /> : <><div className={styles.logo}>Oceans5</div></>}
+      {isAuthenticated ? <>{router.push('/lobby')}</> : <><div className={styles.logo}>Oceans5</div></>}
     </>
   )
 }
