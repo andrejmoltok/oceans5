@@ -21,7 +21,9 @@ export default function Layout({ children }) {
     <div className={emblemaOne.className}>
       <div className={styles.navbar}>
         <ul className={styles.navlist}>
-          <li className={styles.logo} onClick={() => { router.push('/') }}><Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority /></li>
+          <li className={styles.logo} onClick={() => { router.push('/') }}>
+            <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
+          </li>
           <li className={styles.listitem} onClick={() => { router.push('/lobby') }}>Lobby</li>
           <li className={styles.listitem}>Leaderboard</li>
           <li className={styles.listitem}>How to Play</li>
