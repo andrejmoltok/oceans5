@@ -18,24 +18,21 @@ export default function Layout({ children }) {
   const router = useRouter();
 
   return (
-    <html>
-      <body className={emblemaOne.className}>
-        <div className={styles.navbar}>
-          <ul className={styles.navlist}>
-            <li className={!isSignedIn ? styles.logo : styles.listitem} onClick={() => { router.push('/') }}><Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority /></li>
-            <li className={styles.listitem} onClick={() => { router.push('/lobby') }}>Lobby</li>
-            <li className={styles.listitem}>Leaderboard</li>
-            <li className={styles.listitem}>How to Play</li>
-            <li className={styles.listitem}>About</li>
-            {isLoaded && (
-              isSignedIn ? <div style={{ display: 'flex', flexDirection: 'row' }}><li className={styles.listitem}>Hello, {user.fullName}!</li> <li className={styles.listitem}><UserButton afterSignOutUrl="/" /></li></div> :
-                <li className={styles.listitem}><button onClick={() => { router.push('./sign-in') }}>Sign In</button></li>)}
-          </ul>
-        </div>
-        <main>
-          {children}
-        </main>
-      </body>
-    </html>
+    <div className={emblemaOne.className}>
+      <div className={styles.navbar}>
+        <ul className={styles.navlist}>
+          <li className={styles.logo} onClick={() => { router.push('/') }}><Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority /></li>
+          <li className={styles.listitem} onClick={() => { router.push('/lobby') }}>Lobby</li>
+          <li className={styles.listitem}>Leaderboard</li>
+          <li className={styles.listitem}>How to Play</li>
+          <li className={styles.listitem}>About</li>
+          {isSignedIn && isLoaded ? <div style={{ display: 'flex', flexDirection: 'row' }}><li className={styles.listitem}>Hello, {user.fullName}!</li> <li className={styles.listitem}><UserButton afterSignOutUrl="/" /></li></div> :
+            <div style={{ display: 'flex', flexDirection: 'row' }}><li className={styles.listitem}>Please sign in</li><li className={styles.listitem}><button onClick={() => { router.push('./sign-in') }}>Sign In</button></li></div>}
+        </ul>
+      </div>
+      <main>
+        {children}
+      </main>
+    </div>
   )
 }
