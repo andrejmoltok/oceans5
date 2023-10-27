@@ -1,13 +1,13 @@
 import styles from '@/styles/Home.module.css';
-import { useRouter } from 'next/router';
-import { useConvexAuth } from "convex/react";
+import Image from 'next/image';
 
 export default function Home() {
-  const { isLoading, isAuthenticated } = useConvexAuth();
-  const router = useRouter();
   return (
     <>
-      <><div className={styles.logo}>Oceans5</div></>
+      <div className={styles.logo}>
+        <Image src="/ship.png" alt="Medieval ship facing right with pink sails" width={200} height={200} priority/>
+        <div>Oceans5</div>
+      </div>
     </>
   )
 }

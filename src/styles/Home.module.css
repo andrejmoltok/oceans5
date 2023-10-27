@@ -1,13 +1,18 @@
-.logo {
-    margin: auto;
-    width: 100%;
+.signup, .signin {
+    margin: 64px auto 0px;
+    width: 456px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.signup, .signin {
-    margin: auto;
+.logo {
+    margin: 12rem auto 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 6rem;
 }

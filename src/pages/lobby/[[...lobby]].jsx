@@ -1,9 +1,7 @@
 import styles from '@/styles/Lobby.module.css';
-import { useQuery } from "convex/react";
-import { api } from "@/_generated/api";
 
 export default function Lobby() {
-    
+
     return (
         <>
             <div className={styles.lobby}>
@@ -11,14 +9,14 @@ export default function Lobby() {
                     <div className={styles.messages}></div>
                     <div className={styles.input}>
                         <div className={styles.message}>
-                            <input type="text" className={styles.inputBox}></input>
+                            <input type="text" className={styles.inputBox} />
                         </div>
                         <div className={styles.sendButton}>
                             <button>Send</button>
                         </div>
                     </div>
                 </div>
-                <div className={styles.players}>{users?.map(({_id, name}) => {return <div key={_id}>{name}</div>})}</div>
+                <div className={styles.players}>userlist</div>
             </div>
         </>
     )
