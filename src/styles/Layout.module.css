@@ -30,12 +30,13 @@
 .logo {
     width: 200px;
     height: 64px;
+    cursor: pointer;
 }
 
 .navlist > .listitem:nth-child(n+2):nth-child(-n+5):hover {
     background-color: #9f6210;
 }
 
-.navlist > .listitem:nth-child(n+1):nth-child(-n+5) {
+.navlist > .listitem:nth-child(-n+5) {
     cursor: pointer;
 }
