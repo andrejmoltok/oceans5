@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "wss": "node wss/ws.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
@@ -16,7 +15,6 @@
     "create-next-app": "^13.5.6",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
-    "http-proxy-middleware": "^2.0.6",
     "next": "^13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
