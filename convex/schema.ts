@@ -12,6 +12,7 @@ export default defineSchema({
     //the message itself that the user has sent
     message: v.string(),
   }),
+  
   users: defineTable({
     /* Clerk JWT Claims */
 
