@@ -28,8 +28,15 @@ export default function Layout({ children }) {
           <li className={styles.listitem}>Leaderboard</li>
           <li className={styles.listitem}>How to Play</li>
           <li className={styles.listitem}>About</li>
-          {isSignedIn && isLoaded ? <div style={{ display: 'flex', flexDirection: 'row' }}><li className={styles.listitem}>Hello, {user?.username}!</li> <li className={styles.listitem}><UserButton afterSignOutUrl="/" /></li></div> :
-            <div style={{ display: 'flex', flexDirection: 'row' }}><li className={styles.listitem}>Please sign in</li><li className={styles.listitem}><button onClick={() => { router.push('./sign-in') }}>Sign In</button></li></div>}
+          {(isSignedIn && isLoaded) ? 
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <li className={styles.listitem}>Hello, {user?.username}!</li>
+              <li className={styles.listitem}><UserButton afterSignOutUrl="/" /></li>
+            </div> :
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <li className={styles.listitem}><button onClick={() => { router.push('./sign-in') }}>Sign In</button></li>
+                <li className={styles.listitem}><button onClick={() => { router.push('./sign-up') }}>Sign Up</button></li>
+              </div>}
         </ul>
       </div>
       <main>
