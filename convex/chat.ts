@@ -18,6 +18,8 @@ export const chatWriteMsg = mutation({
     },
 });
 
-// export const chatReadMsg = query({
-
-// });
+export const chatReadMsg = query({
+    handler: (ctx) => {
+        return ctx.db.query("chat");
+    }
+});
