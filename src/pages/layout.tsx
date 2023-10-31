@@ -11,7 +11,7 @@ const emblemaOne = localFont({
   display: 'swap',
 })
 
-export default function Layout({ children }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
 
   const { isSignedIn, user, isLoaded } = useUser();
 
