@@ -1,8 +1,14 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
+import { User } from '../classes/User';
 
 export default function Lobby() {
+    const userArray = [
+        new User(1, "András"),
+        new User(1, "Dávid"),
+        new User(1, "John")
+    ]
 
     return (
         <>
@@ -18,7 +24,11 @@ export default function Lobby() {
                         </div>
                     </div>
                 </div>
-                <div className={styles.players}>userlist</div>
+                <div className={styles.players}>
+                    {userArray.map((user, index) => (
+                        <div key={index}>{user.userName}</div>
+                    ))}
+                </div>
             </div>
         </>
     )
