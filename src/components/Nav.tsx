@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 
 const Nav = () => {
-    // const { isSignedIn, user, isLoaded } = useUser();
-    const { isSignedIn, user, isLoaded } = {isSignedIn: false, user: {userName: ""}, isLoaded: false};
+    const { isSignedIn, user, isLoaded } = useUser();
 
     const router = useRouter();
 
@@ -37,4 +36,4 @@ const Nav = () => {
     )
 }
 
-export default Nav
+export default Nav;
