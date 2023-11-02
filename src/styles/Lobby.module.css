@@ -19,7 +19,7 @@
 .messages {
   background-color: burlywood;
   height: 450px;
-  border: 5px solid black;
+  /* border: 1px solid black; */
 }
 
 .input {
@@ -51,4 +51,5 @@
 .players {
   border: 2px solid black;
   width: 40%;
+  background-color: black;
 }

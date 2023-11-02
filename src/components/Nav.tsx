@@ -1,39 +1,37 @@
-"use client"
+
 import styles from '@/styles/Layout.module.css';
-import { UserButton, SignOutButton, SignInButton } from '@clerk/nextjs';
+import { SignUpButton, SignOutButton, SignInButton } from '@clerk/nextjs';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 
-const Nav = () => {
-    const { isSignedIn, user, isLoaded } = useUser();
-
-    const router = useRouter();
+export default async function Nav() {
+    
+    const user = await currentUser();
 
     return (
-        <nav>
+        <>
             <div className={styles.navbar}>
                 <ul className={styles.navlist}>
-                    <li className={styles.logo} onClick={() => { router.push('/') }}>
-                        <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
+                    <li className={styles.logo} >
+                        <a href="/">
+                            <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
+                        </a>
                     </li>
-                    <li className={styles.listitem} onClick={() => { router.push('/lobby') }}>Lobby</li>
+                    <li className={styles.listitem}><a href="/lobby" style={{textDecoration: "none", color: '#79bedb'}}>Lobby</a></li>
                     <li className={styles.listitem}>Leaderboard</li>
                     <li className={styles.listitem}>How to Play</li>
                     <li className={styles.listitem}>About</li>
-                    {(isSignedIn && isLoaded) ?
+                    {(user) ?
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <li className={styles.listitem}>Hello, {user?.username}!</li>
-                            <li className={styles.listitem}><UserButton afterSignOutUrl="/" /></li>
+                            <li className={styles.listitem}><SignOutButton /></li>
                         </div> :
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <li className={styles.listitem}><button onClick={() => { router.push('./sign-in') }}>Sign In</button></li>
-                            <li className={styles.listitem}><button onClick={() => { router.push('./sign-up') }}>Sign Up</button></li>
+                            <li className={styles.listitem}><SignInButton /></li>
+                            <li className={styles.listitem}><SignUpButton /></li>
                         </div>}
                 </ul>
             </div>
-        </nav>
+        </>
     )
 }
-
-export default Nav;

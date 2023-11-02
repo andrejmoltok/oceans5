@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 
 /**
  * Insert or update the user in a Convex table then return the document's ID.
@@ -12,7 +12,7 @@ import { mutation } from "./_generated/server";
  * which of those need to be persisted. For Clerk the fields are determined
  * by the JWT token's Claims config.
  */
-export const store = mutation({
+export const storeUser = mutation({
   args: {},
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -44,5 +44,12 @@ export const store = mutation({
       updated_at: identity.updatedAt!,
       tokenIdentifier: identity.tokenIdentifier,
     });
+  },
+});
+
+export const readUser = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("users").collect();
   },
 });
