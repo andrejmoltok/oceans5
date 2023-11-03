@@ -19,28 +19,7 @@ export function addPlayer(player: Player) {
   return playerArray;
 }
 
-import { Server } from 'socket.io';
-
-// Create a socket.io server
-const ioHandler = (req: any, res:any) => {
-    if (!res.socket.server.io) {
-        console.log('*First use, starting Socket.IO');
-        const io = new Server(res.socket.server);
-
-        // Listen for connection events
-        io.on('connection', () => {
-            console.log(`Socket connected.`);
-        });
-        res.socket.server.io = io;
-    }
-    res.end();
-};
-
-module.exports = ioHandler;
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  
-
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <html lang="en">

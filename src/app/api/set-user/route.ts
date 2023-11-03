@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs/app-beta'
+import { currentUser } from '@clerk/nextjs'
 import { addPlayer } from '@/app/layout';
 import { Player } from '@/app/classes/Player';
 
