@@ -1,14 +1,39 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
-import { User } from '../classes/User';
+import { Player } from '../classes/Player';
+import { useEffect } from 'react';
+import io from 'socket.io-client';
+let socket;
 
 export default function Lobby() {
-    const userArray = [
-        new User(1, "András"),
-        new User(1, "Dávid"),
-        new User(1, "John")
-    ]
+    // useEffect(() => {
+    //     const socket = io('http://localhost:3000/api/websocket'); // A WebSocket szerver címe
+
+    //     socket.on('message', (data: any) => {
+    //       console.log('Kapott üzenet a szerverről:', data);
+    //     });
+
+    //     return () => {
+    //       socket.disconnect();
+    //     };
+    //   }, []);
+
+    useEffect(() => {
+
+
+        const socketInitializer = async () => {
+            await fetch('/api/websocket')
+            socket = io()
+
+            socket.on('connect', () => {
+                console.log('connected')
+            })
+        }
+        socketInitializer();
+    }, [])
+
+    const userArray: Player[] = []
 
     return (
         <>

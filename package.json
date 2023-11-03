@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "node server"
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.26.6",
@@ -17,6 +18,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "ws": "^8.14.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
