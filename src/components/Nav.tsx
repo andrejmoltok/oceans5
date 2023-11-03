@@ -1,4 +1,4 @@
-
+'use client'
 import styles from '@/styles/Layout.module.css';
 import { UserButton, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { SignedIn, SignedOut } from '@clerk/clerk-react'

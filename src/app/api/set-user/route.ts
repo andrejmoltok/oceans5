@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs'
 import { Player } from '@/app/classes/Player';
+import { addPlayer } from '@/app/layout';
 
 
 export async function GET() {
@@ -16,6 +17,7 @@ export async function GET() {
         true,
     )
 
-    // console.log(addPlayer(player));
-    return NextResponse.json([player]);
+    const res =addPlayer(player);
+    
+    return NextResponse.json(res);
 }
