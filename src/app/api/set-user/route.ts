@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs'
-import { addPlayer } from '@/app/layout';
 import { Player } from '@/app/classes/Player';
 
 
@@ -13,9 +12,10 @@ export async function GET() {
 
     const player = new Player(
         user.id,
-        user.username!
+        user.username!,
+        true,
     )
 
-    console.log(addPlayer(player));
-    return NextResponse.json({ ok: "ok" });
+    // console.log(addPlayer(player));
+    return NextResponse.json([player]);
 }
