@@ -1,4 +1,5 @@
-html, body {
+html, body, main {
     box-sizing: border-box;
     margin: auto;
+    height: 100%;
 }

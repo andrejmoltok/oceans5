@@ -1,4 +1,4 @@
-"use client"
+
 import styles from '@/styles/Layout.module.css';
 import { UserButton, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
@@ -37,13 +37,15 @@ const Nav = () => {
     }, [user]);
 
     return (
-        <nav>
+        <>
             <div className={styles.navbar}>
                 <ul className={styles.navlist}>
-                    <li className={styles.logo} onClick={() => { router.push('/') }}>
-                        <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
+                    <li className={styles.logo} >
+                        <a href="/">
+                            <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
+                        </a>
                     </li>
-                    <li className={styles.listitem} onClick={() => { router.push('/lobby') }}>Lobby</li>
+                    <li className={styles.listitem}><a href="/lobby" style={{textDecoration: "none", color: '#79bedb'}}>Lobby</a></li>
                     <li className={styles.listitem}>Leaderboard</li>
                     <li className={styles.listitem}>How to Play</li>
                     <li className={styles.listitem}>About</li>
@@ -67,8 +69,6 @@ const Nav = () => {
                     </div>
                 </ul>
             </div>
-        </nav>
+        </>
     )
 }
-
-export default Nav;
