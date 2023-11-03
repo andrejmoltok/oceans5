@@ -34,7 +34,7 @@ const Nav = () => {
             console.log("Signed out!");
 
         }
-    }, [user]);
+    }, [user, isLoaded, isSignedIn]);
 
     return (
         <>
@@ -72,3 +72,5 @@ const Nav = () => {
         </>
     )
 }
+
+export default Nav;
