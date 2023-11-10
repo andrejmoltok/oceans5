@@ -1,5 +1,6 @@
+'use client'
 
-import styles from '@/styles/Layout.module.css';
+import styles from '@/styles/Nav.module.css';
 import { UserButton, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import Image from 'next/image';
@@ -15,10 +16,11 @@ const Nav = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        async () => {
         if (user && isSignedIn && isLoaded) {
             setLoading(true);
 
-            fetch('/api/set-user', {
+            await fetch('/api/set-user', {
                 method: 'GET',
             })
                 .then(response => response.json())
@@ -33,7 +35,7 @@ const Nav = () => {
         } else {
             console.log("Signed out!");
 
-        }
+        }}
     }, [user, isLoaded, isSignedIn]);
 
     return (

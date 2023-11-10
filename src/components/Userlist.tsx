@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './../styles/Userlist.module.css';
-import { User } from './../app/classes/User';
+import { Player } from './../app/classes/Player';
 
-export default function Userlist({user} : any) {
+export default function Userlist() {
+
     return (
         <>
             {/* Search component comes here */}
-            {user.map((user: User, index: number) => (
+            {/* {player.map((user: Player, index: number) => (
                 <div key={index}>
                     {user.online === true ? 
                         <div className={styles.status}>
@@ -20,7 +21,7 @@ export default function Userlist({user} : any) {
                                 <div className={styles.info}>{user.status}</div>
                             </div>}
                 </div>
-            ))}
+            ))} */}
         </>
     )
 }

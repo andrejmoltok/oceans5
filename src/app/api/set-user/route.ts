@@ -1,9 +1,15 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs'
 import { Player } from '@/app/classes/Player';
 
+const playerArray: Player[] = [];
 
-export async function GET() {
+export function addPlayer(player: Player) {
+  playerArray.push(player);
+  return playerArray;
+}
+
+export async function GET(req:NextRequest,res:NextResponse) {
     const user = await currentUser()
 
     if (!user) {
@@ -17,5 +23,5 @@ export async function GET() {
     )
 
     // console.log(addPlayer(player));
-    return NextResponse.json([player]);
+    return res.json();
 }

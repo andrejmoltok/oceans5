@@ -4,7 +4,6 @@ import Nav from '@/components/Nav';
 import '@/styles/globals.css'
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "./ConvexClientProvider";
-import { Player } from './classes/Player';
 
 
 const emblemaOne = localFont({

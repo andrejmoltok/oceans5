@@ -35,5 +35,12 @@ export default defineSchema({
 
     //unique token
     tokenIdentifier: v.string(),
+
+    // // class defined stats
+    // online: v.boolean(),
+    // status: v.string(),
+    // gamesWon: v.number(),
+    // gamesLost: v.number(),
+    // gamesPlayed: v.number(),
   }).index("by_token", ["tokenIdentifier"]),
 });
