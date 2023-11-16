@@ -1,4 +1,5 @@
 import { query, mutation } from "./_generated/server";
+import { v } from 'convex/values';
 
 /**
  * Insert or update the user in a Convex table then return the document's ID.
@@ -43,6 +44,19 @@ export const storeUser = mutation({
       email_verified: identity.emailVerified!,
       updated_at: identity.updatedAt!,
       tokenIdentifier: identity.tokenIdentifier,
+      gamesPlayed: 0,
+      gamesWon: 0,
+      gamesLost: 0,
+      winRatio: 0,
+      xp: 0,
+      level: 1,
+      rank: "Rookie",
+      avgScore: 0,
+      totalpoints: 0,
+      accuracyRatio: 0,
+      playtimeTotal: "0",
+      consecutiveLogin: 0,
+      alliance: Id // <<<--- WHAT COMES HERE, PLEASE???
     });
   },
 });

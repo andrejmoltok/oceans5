@@ -36,11 +36,35 @@ export default defineSchema({
     //unique token
     tokenIdentifier: v.string(),
 
-    // // class defined stats
-    // online: v.boolean(),
-    // status: v.string(),
-    // gamesWon: v.number(),
-    // gamesLost: v.number(),
-    // gamesPlayed: v.number(),
+    // player stats
+    gamesPlayed: v.number(),
+    gamesWon: v.number(),
+    gamesLost: v.number(),
+    winRatio: v.number(),
+    xp: v.number(),
+    level: v.number(),
+    rank: v.string(),
+    avgScore: v.number(),
+    totalpoints: v.number(),
+    accuracyRatio: v.number(),
+    playtimeTotal: v.string(),
+    consecutiveLogin: v.number(),
+    alliance: v.id("alliance")
   }).index("by_token", ["tokenIdentifier"]),
+  alliance: defineTable({
+    //alliance stats
+    allianceName: v.string(),
+    allianceScore: v.number(),
+    allianceWon: v.number(),
+    allianceLost: v.number(),
+    allianceTotalPlayed: v.number(),
+    allianceWinRatio: v.number(),
+    allianceXP: v.number(),
+    allianceLevel: v.number(),
+    allianceRank: v.string(),
+    allianceAvgScore: v.number(),
+    allianceTotalPoints: v.number(),
+    allianceAccuracy: v.number(),
+    alliancePlaytime: v.string(),
+  }),
 });
