@@ -9,34 +9,9 @@ import { useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react';
 
 const Nav = () => {
+
     const router = useRouter();
     const { isSignedIn, user, isLoaded } = useUser();
-
-    const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        async () => {
-        if (user && isSignedIn && isLoaded) {
-            setLoading(true);
-
-            await fetch('/api/set-user', {
-                method: 'GET',
-            })
-                .then(response => response.json())
-                .then(result => {
-                    setUserData(result); // Az adatok frissítése
-                    setLoading(false); // A betöltés vége
-                })
-                .catch(error => {
-                    console.error('Hiba történt az API hívás során:', error);
-                    setLoading(false); // Hiba esetén is befejezés
-                });
-        } else {
-            console.log("Signed out!");
-
-        }}
-    }, [user, isLoaded, isSignedIn]);
 
     return (
         <>
@@ -47,7 +22,7 @@ const Nav = () => {
                             <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
                         </a>
                     </li>
-                    <li className={styles.listitem}><a href="/lobby" style={{textDecoration: "none", color: '#79bedb'}}>Lobby</a></li>
+                    <li className={styles.listitem}><a href="/lobby" style={{ textDecoration: "none", color: '#79bedb' }}>Lobby</a></li>
                     <li className={styles.listitem}>Leaderboard</li>
                     <li className={styles.listitem}>How to Play</li>
                     <li className={styles.listitem}>About</li>

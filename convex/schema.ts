@@ -49,7 +49,7 @@ export default defineSchema({
     accuracyRatio: v.number(),
     playtimeTotal: v.string(),
     consecutiveLogin: v.number(),
-    alliance: v.id("alliance")
+    alliance: v.optional(v.id("alliance")),
   }).index("by_token", ["tokenIdentifier"]),
   alliance: defineTable({
     //alliance stats

@@ -50,18 +50,17 @@ export const storeUser = mutation({
       winRatio: 0,
       xp: 0,
       level: 1,
-      rank: "Rookie",
+      rank: "Seaman",
       avgScore: 0,
       totalpoints: 0,
       accuracyRatio: 0,
       playtimeTotal: "0",
       consecutiveLogin: 0,
-      alliance: Id // <<<--- WHAT COMES HERE, PLEASE???
     });
   },
 });
 
-export const readUser = query({
+export const readAllUsers = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db.query("users").collect();
