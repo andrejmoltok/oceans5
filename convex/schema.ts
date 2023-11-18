@@ -52,6 +52,7 @@ export default defineSchema({
     consecutiveLogin: v.optional(v.number()),
     alliance: v.optional(v.id("alliance")),
   }).index("by_token", ["tokenIdentifier"]),
+
   alliance: defineTable({
     //alliance stats
     allianceName: v.string(),
