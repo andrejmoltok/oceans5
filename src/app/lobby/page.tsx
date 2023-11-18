@@ -1,8 +1,7 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
-import Userlist from '../../components/Userlist'
-import { Player } from '../classes/Player';  
+import Userlist from '../../components/Userlist'  
 import React, { useState, useEffect } from 'react';
 
 

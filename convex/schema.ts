@@ -45,10 +45,10 @@ export default defineSchema({
     level: v.number(),
     rank: v.string(),
     avgScore: v.number(),
-    totalpoints: v.number(),
+    totalPoints: v.number(),
     accuracyRatio: v.number(),
     playtimeTotal: v.string(),
-    consecutiveLogin: v.number(),
+    consecutiveLogin: v.optional(v.number()),
     alliance: v.optional(v.id("alliance")),
   }).index("by_token", ["tokenIdentifier"]),
   alliance: defineTable({

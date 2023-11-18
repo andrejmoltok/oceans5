@@ -52,10 +52,9 @@ export const storeUser = mutation({
       level: 1,
       rank: "Seaman",
       avgScore: 0,
-      totalpoints: 0,
+      totalPoints: 0,
       accuracyRatio: 0,
       playtimeTotal: "0",
-      consecutiveLogin: 0,
     });
   },
 });
