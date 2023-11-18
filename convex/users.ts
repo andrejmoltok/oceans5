@@ -48,6 +48,7 @@ export const storeUser = mutation({
       gamesWon: 0,
       gamesLost: 0,
       winRatio: 0,
+      loseRatio: 0,
       xp: 0,
       level: 1,
       rank: "Seaman",
