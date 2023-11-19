@@ -3,7 +3,7 @@
 import styles from '@/styles/Lobby.module.css';
 import Chat from '@/components/Chat';
 import { Player } from '@/app/classes/Player';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import PlayerList from '@/components/PlayerList';
 import { User } from '../classes/User';
@@ -27,7 +27,6 @@ export default function Lobby() {
     const [chatMessages, setChatMessages] = useState<string[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
     const {isSignedIn, user, isLoaded } = useUser();
-
 
     useEffect(() => {
         if (isLoaded) {
