@@ -1,5 +1,9 @@
-html, body, main {
-    box-sizing: border-box;
-    margin: auto;
-    height: 100%;
+/** @format */
+
+html,
+body,
+main {
+  box-sizing: border-box;
+  margin: auto;
+  height: 80%;
 }

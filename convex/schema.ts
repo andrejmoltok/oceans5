@@ -41,16 +41,18 @@ export default defineSchema({
     gamesWon: v.number(),
     gamesLost: v.number(),
     winRatio: v.number(),
+    loseRatio: v.number(),
     xp: v.number(),
     level: v.number(),
     rank: v.string(),
     avgScore: v.number(),
-    totalpoints: v.number(),
+    totalPoints: v.number(),
     accuracyRatio: v.number(),
     playtimeTotal: v.string(),
-    consecutiveLogin: v.number(),
-    alliance: v.id("alliance")
+    consecutiveLogin: v.optional(v.number()),
+    alliance: v.optional(v.id("alliance")),
   }).index("by_token", ["tokenIdentifier"]),
+
   alliance: defineTable({
     //alliance stats
     allianceName: v.string(),
@@ -59,6 +61,7 @@ export default defineSchema({
     allianceLost: v.number(),
     allianceTotalPlayed: v.number(),
     allianceWinRatio: v.number(),
+    allianceLoseRatio: v.number(),
     allianceXP: v.number(),
     allianceLevel: v.number(),
     allianceRank: v.string(),

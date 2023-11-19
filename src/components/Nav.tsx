@@ -9,34 +9,9 @@ import { useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react';
 
 const Nav = () => {
+
     const router = useRouter();
     const { isSignedIn, user, isLoaded } = useUser();
-
-    const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        async () => {
-        if (user && isSignedIn && isLoaded) {
-            setLoading(true);
-
-            await fetch('/api/set-user', {
-                method: 'GET',
-            })
-                .then(response => response.json())
-                .then(result => {
-                    setUserData(result); // Az adatok frissítése
-                    setLoading(false); // A betöltés vége
-                })
-                .catch(error => {
-                    console.error('Hiba történt az API hívás során:', error);
-                    setLoading(false); // Hiba esetén is befejezés
-                });
-        } else {
-            console.log("Signed out!");
-
-        }}
-    }, [user, isLoaded, isSignedIn]);
 
     return (
         <>
