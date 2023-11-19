@@ -1,22 +1,10 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
-import Userlist from '../../components/Userlist'
+import Userlist from '../../components/Userlist';
 import React, { useState, useEffect } from 'react';
-import { useMutation, useConvexAuth } from "convex/react";
-import { api } from "@/convex/_generated/api";
 
 export default function Lobby() {
-
-    const { isAuthenticated } = useConvexAuth();
-
-    const storeUser = useMutation(api.users.storeUser);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            storeUser()
-        }
-    }, [storeUser, isAuthenticated]);
 
     return (
         <div className={styles.lobby}>
