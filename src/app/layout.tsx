@@ -10,6 +10,8 @@ const emblemaOne = localFont({
   display: 'swap',
 });
 
+const playerArray: Player[] = []
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
@@ -27,4 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </ConvexClientProvider>
     </ClerkProvider>
   )
+}
+
+export function addPlayer(player: Player) {
+  playerArray.push(player);
+  return playerArray;
 }
