@@ -3,7 +3,7 @@
 import styles from '@/styles/Lobby.module.css';
 
 import React, { useEffect, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 
 import Chat from '@/components/Chat';
 import { io, Socket } from 'socket.io-client';
@@ -13,6 +13,9 @@ import { Player } from '@/app/classes/Player';
 import { User } from '@/app/classes/User';
 import { Guest } from '@/app/classes/Guest';
 
+import { useQuery, useConvexAuth } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 
 let currentPlayer: Player;;
 
@@ -20,13 +23,13 @@ const setPlayer = (user: any, socketId: string): Player => {
     if (user) {
         /* User class constructor data order reference
             ---------------------------------------------------
-            new User(userId, userName, xp, level, rank,
+            new User(userId, userName(nickname), xp, level, rank,
                 online?, gamesWon?, gamesLost?, gamesPLayed?,
                 winRatio?, loseRatio?, avgScore?, totalPoints?,
                 accuracyRatio?, playtimeTotal?)
             ---------------------------------------------------
         */
-        return new User(user?.id, user?.username!, 0, 1, "Seaman", true);
+        return new User(user?._id, user?.nickname!, user?.xp, user?.level, user?.rank, true);
     } else {
         const guest = new Guest(socketId, true);
         return guest;
@@ -38,10 +41,16 @@ export default function Lobby() {
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
     const [chatMessages, setChatMessages] = useState<string[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const { isSignedIn, user, isLoaded } = useUser();
+    const { isSignedIn, isLoaded } = useAuth();
+    const { isAuthenticated } = useConvexAuth();
+    const user: any = useQuery(api.users.readUserByToken);
 
     useEffect(() => {
-        if (isLoaded) {
+
+        if ((isLoaded && isSignedIn && isAuthenticated) || user === null) {
+            var nick: string;
+            var time: any;
+
             const newSocket = io('http://localhost:3001/user');
 
             newSocket.on('connect', () => {
@@ -56,7 +65,16 @@ export default function Lobby() {
             });
 
             newSocket.on('lobby-chat', (msg: string) => {
-                setChatMessages((prevMessages) => [msg, ...prevMessages]);
+                // time = new Date();
+                // // ha a user === null, akkor
+                // if (user === null) {
+                //     // irja ki a Vendeg+ID nevet az uzenet elott
+                //     nick = new Guest(newSocket.id, true).playerName
+                // } else {
+                //     // ha user nem null, akkor irja ki a nickname-jet
+                //     nick = user?.nickname.toString();
+                // }
+                setChatMessages((prevMessages) => ["Temporary Text" + ': ' + msg, ...prevMessages]);
             });
 
             setSocket(newSocket);
@@ -65,9 +83,9 @@ export default function Lobby() {
                 if (newSocket) {
                     newSocket.disconnect();
                 }
-            };
+            }
         }
-    }, [user, isLoaded, isSignedIn]);
+    }, [user, isAuthenticated, isLoaded, isSignedIn]);
 
     const sendMessage = (message: string) => {
         if (socket) {

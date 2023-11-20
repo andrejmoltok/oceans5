@@ -1,33 +1,36 @@
+/** @format */
+
 .playerContainer {
-    height: fit-content;
+  height: fit-content;
 }
 
 .status {
-    display: flex;
-    flex-direction: row;
-    gap: 35px;
-    align-items: center;
-    color: white;
-    font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+  align-items: center;
+  color: white;
+  font-size: 16px;
 }
 
 .onlineBull {
-    color: #00ff66;
-    font-size: 22px;
-    padding-left: 10px;
+  color: #00ff66;
+  font-size: 22px;
+  padding-left: 10px;
 }
 
 .offlineBull {
-    color: red;
-    font-size: 22px;
-    padding-left: 10px;
+  color: red;
+  font-size: 22px;
+  padding-left: 10px;
 }
 
 .username {
-    min-width: 200px;
+  min-width: 200px;
+  font-size: 16px;
 }
 
 .info {
-    font-size: 11px;
-    margin-left: 20px;
+  font-size: 11px;
+  margin-left: 20px;
 }
