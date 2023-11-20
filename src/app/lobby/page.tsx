@@ -18,7 +18,15 @@ let currentPlayer: Player;;
 
 const setPlayer = (user: any, socketId: string): Player => {
     if (user) {
-        return new User(user?.id, user?.username!, 0, 0, true);
+        /* User class constructor data order reference
+            ---------------------------------------------------
+            new User(userId, userName, xp, level, rank,
+                online?, gamesWon?, gamesLost?, gamesPLayed?,
+                winRatio?, loseRatio?, avgScore?, totalPoints?,
+                accuracyRatio?, playtimeTotal?)
+            ---------------------------------------------------
+        */
+        return new User(user?.id, user?.username!, 0, 1, "Seaman", true);
     } else {
         const guest = new Guest(socketId, true);
         return guest;
