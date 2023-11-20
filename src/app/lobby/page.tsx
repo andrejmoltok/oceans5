@@ -1,15 +1,18 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
-import Chat from '@/components/Chat';
-import { Player } from '@/app/classes/Player';
+
 import React, { useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
-import Userlist from '@/components/Userlist';
-import PlayerList from '@/components/PlayerList';
-import { User } from '../classes/User';
-import { Guest } from '../classes/Guest';
 import { useUser } from '@clerk/nextjs';
+
+import Chat from '@/components/Chat';
+import { io, Socket } from 'socket.io-client';
+
+import PlayerList from '@/components/PlayerList';
+import { Player } from '@/app/classes/Player';
+import { User } from '@/app/classes/User';
+import { Guest } from '@/app/classes/Guest';
+
 
 let currentPlayer: Player;;
 
@@ -27,14 +30,14 @@ export default function Lobby() {
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
     const [chatMessages, setChatMessages] = useState<string[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const {isSignedIn, user, isLoaded } = useUser();
+    const { isSignedIn, user, isLoaded } = useUser();
 
     useEffect(() => {
         if (isLoaded) {
             const newSocket = io('http://localhost:3001/user');
-            
+
             newSocket.on('connect', () => {
-                
+
                 currentPlayer = setPlayer(user, newSocket.id);
                 newSocket.emit('player-joined', currentPlayer);
                 console.log('Kapcsolat létrehozva a WebSocket szerverrel.');
@@ -45,7 +48,7 @@ export default function Lobby() {
             });
 
             newSocket.on('lobby-chat', (msg: string) => {
-                setChatMessages((prevMessages) => [...prevMessages, msg]);
+                setChatMessages((prevMessages) => [msg, ...prevMessages]);
             });
 
             setSocket(newSocket);
@@ -67,9 +70,13 @@ export default function Lobby() {
 
     return (
         <div className={styles.lobby}>
-            <Chat chatMessages={chatMessages} sendMessage={sendMessage} >
-            </Chat>
-            <PlayerList playerArr={playerArray}></PlayerList>
+            <div>
+                <Chat chatMessages={chatMessages} sendMessage={sendMessage} >
+                </Chat>
+            </div>
+            <div>
+                <PlayerList playerArr={playerArray}></PlayerList>
+            </div>
         </div>
     )
 }
