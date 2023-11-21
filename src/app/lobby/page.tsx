@@ -3,7 +3,7 @@
 import styles from '@/styles/Lobby.module.css';
 
 import React, { useEffect, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 
 import Chat from '@/components/Chat';
 import { io, Socket } from 'socket.io-client';
@@ -14,13 +14,16 @@ import { User } from '@/app/classes/User';
 import { Guest } from '@/app/classes/Guest';
 import { fetchUser } from '../services/dbService';
 
+import { useQuery, useConvexAuth } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 
 let currentPlayer: Player;
 
 const setPlayer = (user: any, socketId: string): void => {
     if (user) {
         console.log(user);
-        
+
         try {
             currentPlayer = fetchUser(user.id);
         } catch (e) {
@@ -36,12 +39,18 @@ const setPlayer = (user: any, socketId: string): void => {
 export default function Lobby() {
     const [message, setMessage] = useState('');
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
-    const [chatMessages, setChatMessages] = useState<{sender: Player, msg: string}[]>([]);
+    const [chatMessages, setChatMessages] = useState<{ sender: Player, msg: string }[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const { isSignedIn, user, isLoaded } = useUser();
+    const { isSignedIn, isLoaded } = useAuth();
+    const { isAuthenticated } = useConvexAuth();
+    const user: any = useQuery(api.users.readUserByToken);
 
     useEffect(() => {
-        if (isLoaded) {
+
+        if ((isLoaded && isSignedIn && isAuthenticated) || user === null) {
+            var nick: string;
+            var time: any;
+
             const newSocket = io('http://localhost:3001/user');
 
             newSocket.on('connect', () => {
@@ -55,7 +64,7 @@ export default function Lobby() {
             });
 
             newSocket.on('lobby-chat', (sender: Player, msg: string) => {
-                setChatMessages((prevMessages) => [{sender: sender, msg: msg}, ...prevMessages]);
+                setChatMessages((prevMessages) => [{ sender: sender, msg: msg }, ...prevMessages]);
             });
 
             setSocket(newSocket);
@@ -64,9 +73,9 @@ export default function Lobby() {
                 if (newSocket) {
                     newSocket.disconnect();
                 }
-            };
+            }
         }
-    }, [user, isLoaded, isSignedIn]);
+    }, [user, isAuthenticated, isLoaded, isSignedIn]);
 
     const sendMessage = (message: string) => {
         if (socket) {
