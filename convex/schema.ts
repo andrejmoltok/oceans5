@@ -16,7 +16,7 @@ export default defineSchema({
     /* Clerk JWT Claims */
 
     //user.full_name
-    name: v.string(),
+    name: v.optional(v.string()),
 
     //user.primary_email_address
     email: v.string(),
