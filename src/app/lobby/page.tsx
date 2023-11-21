@@ -12,15 +12,20 @@ import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { User } from '@/app/classes/User';
 import { Guest } from '@/app/classes/Guest';
+
 import { fetchUser } from '../services/dbService';
+
+//ezeket kell definialni a COnvex funkciok lehivasahoz
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 
 let currentPlayer: Player;
 
 const setPlayer = (user: any, socketId: string): void => {
     if (user) {
-        console.log(user);
-        
+        //console.log(user);
+
         try {
             currentPlayer = fetchUser(user.id);
         } catch (e) {
@@ -36,9 +41,12 @@ const setPlayer = (user: any, socketId: string): void => {
 export default function Lobby() {
     const [message, setMessage] = useState('');
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
-    const [chatMessages, setChatMessages] = useState<{sender: Player, msg: string}[]>([]);
+    const [chatMessages, setChatMessages] = useState<{ sender: Player, msg: string }[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const { isSignedIn, user, isLoaded } = useUser();
+    const { isSignedIn, isLoaded } = useUser();
+
+    // csak igy siman meghivod useQuery-vel ha query funkciorol van szo
+    const userData = useQuery(api.users.readUserByToken);
 
     useEffect(() => {
         if (isLoaded) {
@@ -46,8 +54,8 @@ export default function Lobby() {
 
             newSocket.on('connect', () => {
                 console.log("ssssssssss");
-                
-                setPlayer(user, newSocket.id);
+
+                setPlayer(userData, newSocket.id);
                 newSocket.emit('player-joined', currentPlayer);
                 console.log('Kapcsolat létrehozva a WebSocket szerverrel.');
             });
@@ -57,7 +65,7 @@ export default function Lobby() {
             });
 
             newSocket.on('lobby-chat', (sender: Player, msg: string) => {
-                setChatMessages((prevMessages) => [{sender: sender, msg: msg}, ...prevMessages]);
+                setChatMessages((prevMessages) => [{ sender: sender, msg: msg }, ...prevMessages]);
             });
 
             setSocket(newSocket);
@@ -68,7 +76,7 @@ export default function Lobby() {
                 }
             };
         }
-    }, [user, isLoaded, isSignedIn]);
+    }, [userData, isLoaded, isSignedIn]);
 
     const sendMessage = (message: string) => {
         if (socket) {
