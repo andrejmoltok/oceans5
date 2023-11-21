@@ -66,3 +66,25 @@ export const readAllUsers = query({
     return await ctx.db.query("users").collect();
   },
 });
+
+export const readUserByToken = query({
+  args: {},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      // throw new Error("Called readUserByToken without authentication present");
+      return null;
+    }
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier!)
+      )
+      .unique();
+    if (user !== null) {
+      if (user.tokenIdentifier.toString().split('|')[1] === identity.tokenIdentifier.toString().split('|')[1]) {
+        return user;
+      }
+    }
+  },
+});

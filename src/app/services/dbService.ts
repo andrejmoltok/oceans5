@@ -1,8 +1,10 @@
-import { User } from "../classes/User"
+import { User } from "../classes/User";
+import {  } from 'convex';
 
-export const fetchPlayer = (user: any): User => {
+export const fetchUser = (user: any): User => {
     const aUser = new User(user.id, user.username);
-    aUser.online = true;
-    aUser.status = "Avaliable";
+    const userData = readUserByToken();
+    console.log(userData);
+    
     return aUser;
-} 
+}

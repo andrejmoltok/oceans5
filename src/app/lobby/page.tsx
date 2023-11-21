@@ -12,7 +12,7 @@ import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { User } from '@/app/classes/User';
 import { Guest } from '@/app/classes/Guest';
-import { fetchPlayer } from '../services/dbService';
+import { fetchUser } from '../services/dbService';
 
 
 let currentPlayer: Player;
@@ -22,7 +22,7 @@ const setPlayer = (user: any, socketId: string): void => {
         console.log(user);
         
         try {
-            currentPlayer = fetchPlayer(user);
+            currentPlayer = fetchUser(user.id);
         } catch (e) {
             console.log(e);
             // ToDo: handle fetch error;
