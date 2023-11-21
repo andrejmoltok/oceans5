@@ -1,9 +1,11 @@
 import { User } from "../classes/User";
-import {  } from 'convex';
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { readUserById, readUserByToken } from "@/convex/users";
 
 export const fetchUser = (user: any): User => {
     const aUser = new User(user.id, user.username);
-    const userData = readUserByToken();
+    const userData = useQuery(api.users.readUserByToken);
     console.log(userData);
     
     return aUser;

@@ -21,9 +21,9 @@ export class User extends Player {
     constructor(
         userID: any,
         userName: string,
-        xp: number,
-        level: number,
-        rank: string,
+        xp?: number,
+        level?: number,
+        rank?: string,
         online?: true,
         gamesWon?: number,
         gamesLost?: number,
@@ -45,9 +45,9 @@ export class User extends Player {
         this.gamesPlayed = (this.gamesWon + this.gamesLost) || 0;
         this.winRatio = (this.gamesPlayed > 0 ? +((this.gamesWon / this.gamesPlayed).toFixed(2)) : 0);
         this.loseRatio = (this.gamesPlayed > 0 ? +((this.gamesLost / this.gamesPlayed).toFixed(2)) : 0);
-        this.xp = xp;
-        this.level = level;
-        this.rank = rank;
+        this.xp = xp || 0 ;
+        this.level = level || 0;
+        this.rank = rank || "";
         this.avgScore = avgScore || 0;
         this.totalPoints = totalPoints || 0;
         this.accuracyRatio = accuracyRatio || 0;
