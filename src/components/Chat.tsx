@@ -1,8 +1,9 @@
 "use client"
 
+import { Player } from "@/app/classes/Player";
 import { useState } from "react";
 
-const Chat: React.FC<{ chatMessages: string[], sendMessage: Function }>  = ({chatMessages, sendMessage}) => {
+const Chat: React.FC<{ chatMessages: {sender: Player, msg: string}[], sendMessage: Function }>  = ({chatMessages, sendMessage}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleSendMessage = () => {
@@ -14,11 +15,16 @@ const Chat: React.FC<{ chatMessages: string[], sendMessage: Function }>  = ({cha
 
   return (
     <div>
-      <div>
-        {chatMessages.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))}
-      </div>
+      {chatMessages.length > 0 ? (
+        <div>
+          {chatMessages.map((message, index) => (
+            <div key={index}>{message.sender.playerName}: {message.msg}</div>
+          ))}
+        </div>
+      ) : (
+        <div>Nincs üzenet</div>
+      )}
+  
       <input
         type="text"
         value={inputValue}

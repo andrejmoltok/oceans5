@@ -12,23 +12,31 @@ import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { User } from '@/app/classes/User';
 import { Guest } from '@/app/classes/Guest';
+import { fetchPlayer } from '../services/dbService';
 
 
-let currentPlayer: Player;;
+let currentPlayer: Player;
 
-const setPlayer = (user: any, socketId: string): Player => {
+const setPlayer = (user: any, socketId: string): void => {
     if (user) {
-        return new User(user?.id, user?.username!, 0, 0, true);
+        console.log(user);
+        
+        try {
+            currentPlayer = fetchPlayer(user);
+        } catch (e) {
+            console.log(e);
+            // ToDo: handle fetch error;
+        }
     } else {
         const guest = new Guest(socketId, true);
-        return guest;
+        currentPlayer = guest;
     }
 }
 
 export default function Lobby() {
     const [message, setMessage] = useState('');
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
-    const [chatMessages, setChatMessages] = useState<string[]>([]);
+    const [chatMessages, setChatMessages] = useState<{sender: Player, msg: string}[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
     const { isSignedIn, user, isLoaded } = useUser();
 
@@ -37,8 +45,7 @@ export default function Lobby() {
             const newSocket = io('http://localhost:3001/user');
 
             newSocket.on('connect', () => {
-
-                currentPlayer = setPlayer(user, newSocket.id);
+                setPlayer(user, newSocket.id);
                 newSocket.emit('player-joined', currentPlayer);
                 console.log('Kapcsolat létrehozva a WebSocket szerverrel.');
             });
@@ -47,8 +54,8 @@ export default function Lobby() {
                 setPlayerArray(playerArr);
             });
 
-            newSocket.on('lobby-chat', (msg: string) => {
-                setChatMessages((prevMessages) => [msg, ...prevMessages]);
+            newSocket.on('lobby-chat', (sender: Player, msg: string) => {
+                setChatMessages((prevMessages) => [{sender: sender, msg: msg}, ...prevMessages]);
             });
 
             setSocket(newSocket);
