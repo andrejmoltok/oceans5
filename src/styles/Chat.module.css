@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 500px;
+    width: 100%;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100%;
+    padding: 10px 0;
+}
+
+.message {
+    padding: 5px;
+}
+
+.input {
+    display: flex;
+}

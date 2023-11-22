@@ -1,6 +1,6 @@
 import { Player } from "./Player";
 
-export class User extends Player {
+export class RegistredPlayer extends Player {
     playerId: string;
     playerName: string;
     userID: any;

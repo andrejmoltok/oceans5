@@ -10,42 +10,36 @@ import { io, Socket } from 'socket.io-client';
 
 import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
-import { User } from '@/app/classes/User';
+import { RegistredPlayer } from '@/app/classes/RegistredPlayer';
 import { Guest } from '@/app/classes/Guest';
-
-import { fetchUser } from '../services/dbService';
-
-//ezeket kell definialni a COnvex funkciok lehivasahoz
-import { useQuery, useMutation } from "convex/react";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 
 let currentPlayer: Player;
 
-const setPlayer = (user: any, socketId: string): void => {
-    if (user) {
-        //console.log(user);
-
-        try {
-            currentPlayer = fetchUser(user.id);
-        } catch (e) {
-            console.log(e);
-            // ToDo: handle fetch error;
-        }
+const setPlayer = (userData: any, socketId: string): Player => {
+    let player;
+    if (userData) {
+        player = new RegistredPlayer(
+            userData.tokenIdentifier,
+            userData.nickname,
+            userData.xp,
+            userData.level,
+            userData.rank,
+            true
+        );
     } else {
-        const guest = new Guest(socketId, true);
-        currentPlayer = guest;
+        player = new Guest(socketId, true);
     }
+    return player;
 }
 
 export default function Lobby() {
-    const [message, setMessage] = useState('');
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
     const [chatMessages, setChatMessages] = useState<{ sender: Player, msg: string }[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const { isSignedIn, isLoaded } = useUser();
-
-    // csak igy siman meghivod useQuery-vel ha query funkciorol van szo
+    const { isLoaded } = useUser();
     const userData = useQuery(api.users.readUserByToken);
 
     useEffect(() => {
@@ -53,9 +47,7 @@ export default function Lobby() {
             const newSocket = io('http://localhost:3001/user');
 
             newSocket.on('connect', () => {
-                console.log("ssssssssss");
-
-                setPlayer(userData, newSocket.id);
+                currentPlayer = setPlayer(userData, newSocket.id);
                 newSocket.emit('player-joined', currentPlayer);
                 console.log('Kapcsolat létrehozva a WebSocket szerverrel.');
             });
@@ -76,24 +68,29 @@ export default function Lobby() {
                 }
             };
         }
-    }, [userData, isLoaded, isSignedIn]);
+    }, [isLoaded, userData])
 
     const sendMessage = (message: string) => {
         if (socket) {
             socket.emit('lobby-chat', currentPlayer, message);
-            setMessage('');
         }
     };
 
-    return (
-        <div className={styles.lobby}>
-            <div>
-                <Chat chatMessages={chatMessages} sendMessage={sendMessage} >
-                </Chat>
+    if (isLoaded && userData) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.lobby}>
+                    <Chat chatMessages={chatMessages} sendMessage={sendMessage} >
+                    </Chat>
+                    <PlayerList playerArr={playerArray}></PlayerList>
+                </div>
             </div>
-            <div>
-                <PlayerList playerArr={playerArray}></PlayerList>
+        )
+    } else {
+        return (
+            <div className={styles.loading}>
+                <div>Loading...</div>
             </div>
-        </div>
-    )
+        )
+    }
 }
