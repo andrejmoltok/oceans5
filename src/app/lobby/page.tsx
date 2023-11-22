@@ -1,7 +1,6 @@
 'use client'
 
 import styles from '@/styles/Lobby.module.css';
-
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 
@@ -17,8 +16,9 @@ import { api } from "@/convex/_generated/api";
 
 
 let currentPlayer: Player;
+let isEverythingLoaded = false;
 
-const setPlayer = (userData: any, socketId: string): Player => {
+const guestOrRegistred = (userData: any, socketId: string): Player => {
     let player;
     if (userData) {
         player = new RegistredPlayer(
@@ -44,24 +44,36 @@ export default function Lobby() {
 
     useEffect(() => {
         if (isLoaded) {
+            // Create a new WebSocket connection
             const newSocket = io('http://localhost:3001/user');
 
+            // Event listener for connection establishment
             newSocket.on('connect', () => {
-                currentPlayer = setPlayer(userData, newSocket.id);
-                newSocket.emit('player-joined', currentPlayer);
-                console.log('Kapcsolat létrehozva a WebSocket szerverrel.');
-            });
 
-            newSocket.on('user-list', (playerArr: Player[]) => {
+                // If the user is signed in, it creates a RegistredPlayer object
+                // from the fetched data from the database and returns with it.
+                // If the user is not signed in, it creates and returns with a Guest object.
+                currentPlayer = guestOrRegistred(userData, newSocket.id);
+                
+                // Emit a 'player-joined' event and the currentPlayer: Player /Guest or RegistredPlayer/
+                // object to the WebSocket server.
+                newSocket.emit('player-joined', currentPlayer);
+            });
+            
+            // Event listener for receiving player list from the ws server
+            newSocket.on('player-list', (playerArr: Player[]) => {
                 setPlayerArray(playerArr);
             });
-
+            
+            // Event listener for receiving chat messages from the ws server
             newSocket.on('lobby-chat', (sender: Player, msg: string) => {
                 setChatMessages((prevMessages) => [{ sender: sender, msg: msg }, ...prevMessages]);
             });
 
+            isEverythingLoaded = true;
             setSocket(newSocket);
 
+            // Cleanup function to disconnect the socket on component unmount
             return () => {
                 if (newSocket) {
                     newSocket.disconnect();
@@ -70,13 +82,15 @@ export default function Lobby() {
         }
     }, [isLoaded, userData])
 
+    // Emit a 'lobby-chat' event and the currentPlayer/ the sender/: Player/ Guest or RegistredPlayer/
+    // object and the message to the WebSocket server.
     const sendMessage = (message: string) => {
         if (socket) {
             socket.emit('lobby-chat', currentPlayer, message);
         }
     };
 
-    if (isLoaded && userData) {
+    if (isEverythingLoaded) {
         return (
             <div className={styles.container}>
                 <div className={styles.lobby}>
