@@ -22,7 +22,7 @@ const guestOrRegistred = (userData: any, socketId: string): Player => {
     let player;
     if (userData) {
         player = new RegistredPlayer(
-            userData.tokenIdentifier,
+            userData.tokenIdentifier.split('|')[1].toString(),
             userData.nickname,
             userData.xp,
             userData.level,
@@ -54,17 +54,17 @@ export default function Lobby() {
                 // from the fetched data from the database and returns with it.
                 // If the user is not signed in, it creates and returns with a Guest object.
                 currentPlayer = guestOrRegistred(userData, newSocket.id);
-                
+
                 // Emit a 'player-joined' event and the currentPlayer: Player /Guest or RegistredPlayer/
                 // object to the WebSocket server.
                 newSocket.emit('player-joined', currentPlayer);
             });
-            
+
             // Event listener for receiving player list from the ws server
             newSocket.on('player-list', (playerArr: Player[]) => {
                 setPlayerArray(playerArr);
             });
-            
+
             // Event listener for receiving chat messages from the ws server
             newSocket.on('lobby-chat', (sender: Player, msg: string) => {
                 setChatMessages((prevMessages) => [{ sender: sender, msg: msg }, ...prevMessages]);
