@@ -3,7 +3,9 @@
 html,
 body,
 main {
-  box-sizing: border-box;
   margin: auto;
-  height: 80%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }

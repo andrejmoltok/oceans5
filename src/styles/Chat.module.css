@@ -1,0 +1,25 @@
+/** @format */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 450px;
+  width: 100%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.message {
+  padding: 5px;
+}
+
+.input {
+  display: flex;
+}

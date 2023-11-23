@@ -53,6 +53,32 @@ export default defineSchema({
     alliance: v.optional(v.id("alliance")),
   }).index("by_token", ["tokenIdentifier"]),
 
+  modifiedUsers: defineTable({
+    name: v.optional(v.string()),
+    email: v.string(),
+    email_verified: v.boolean(),
+    tokenIdentifier: v.string(),
+    consecutiveLogin: v.optional(v.number()),
+    playerData: v.object({
+      nickname: v.string(),
+      picture: v.string(),
+      updated_at: v.string(),
+      gamesPlayed: v.number(),
+      gamesWon: v.number(),
+      gamesLost: v.number(),
+      winRatio: v.number(),
+      loseRatio: v.number(),
+      xp: v.number(),
+      level: v.number(),
+      rank: v.string(),
+      avgScore: v.number(),
+      totalPoints: v.number(),
+      accuracyRatio: v.number(),
+      playtimeTotal: v.string(),
+      alliance: v.optional(v.id("alliance"))
+    }),
+  }).index("by_token", ["tokenIdentifier"]),
+
   alliance: defineTable({
     //alliance stats
     allianceName: v.string(),

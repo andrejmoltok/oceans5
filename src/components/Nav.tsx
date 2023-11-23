@@ -46,6 +46,7 @@ const Nav = () => {
                     </div>
                 </ul>
             </div>
+            <div className={styles.spacer}></div>
         </>
     )
 }
