@@ -13,7 +13,7 @@ export default function PlayerList({ playerArr }: { playerArr: Player[] }) {
                     <div className={styles.username}>
                         <span className={styles.onlineBull}>&bull;</span>{aPlayer.playerName}
                     </div>
-                    <div className={styles.info}>{aPlayer.status}</div>
+                    <div className={styles.info}>{aPlayer.status ? "Available" : "Not available"}</div>
                 </div>
             ))}
         </div>

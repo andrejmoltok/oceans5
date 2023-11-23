@@ -3,63 +3,27 @@ import { Player } from "./Player";
 export class RegistredPlayer extends Player {
     playerId: string;
     playerName: string;
-    userID: any;
-    userName: string;
-    gamesWon: number;
-    gamesLost: number;
-    gamesPlayed: number;
-    winRatio: number;
-    loseRatio: number;
-    xp: number;
-    level: number;
-    rank: string;
-    avgScore: number;
-    totalPoints: number;
-    accuracyRatio: number;
-    playtimeTotal: string;
+    picture: string = "";
+    updated_at: string = "";
+    gamesWon: number = 0;
+    gamesLost: number = 0;
+    gamePlayed: number = 0;
+    winRatio: number = 0;
+    loseRatio: number = 0;
+    xp: number = 0;
+    level: number = 1;
+    rank: string = "Seaman";
+    avgScore: number = 0;
+    totalPoints: number = 0;
+    accuracyRatio: number = 0;
+    playtimeTotal: string = "0";
 
     constructor(
-        userID: any,
-        userName: string,
-        xp?: number,
-        level?: number,
-        rank?: string,
-        online?: true,
-        gamesWon?: number,
-        gamesLost?: number,
-        gamesPlayed?: number,
-        winRatio?: number,
-        loseRatio?: number,
-        avgScore?: number,
-        totalPoints?: number,
-        accuracyRatio?: number,
-        playtimeTotal?: string,
+        playerId: string,
+        playerName: string,
     ) {
-        super(online);
-        this.userID = userID;
-        this.userName = userName;
-        this.playerId = userID;
-        this.playerName = userName;
-        this.gamesWon = gamesWon || 0;
-        this.gamesLost = gamesLost || 0;
-        this.gamesPlayed = (this.gamesWon + this.gamesLost) || 0;
-        this.winRatio = (this.gamesPlayed > 0 ? +((this.gamesWon / this.gamesPlayed).toFixed(2)) : 0);
-        this.loseRatio = (this.gamesPlayed > 0 ? +((this.gamesLost / this.gamesPlayed).toFixed(2)) : 0);
-        this.xp = xp || 0 ;
-        this.level = level || 0;
-        this.rank = rank || "";
-        this.avgScore = avgScore || 0;
-        this.totalPoints = totalPoints || 0;
-        this.accuracyRatio = accuracyRatio || 0;
-        this.playtimeTotal = playtimeTotal || "";
+        super();
+        this.playerId = playerId;
+        this.playerName = playerName;
     }
-
-    setPlayerId(): string {
-        return this.userID;
-    }
-
-    setPlayerName(): string {
-        return this.userName;
-    }
-
 }
