@@ -12,54 +12,14 @@ export default defineSchema({
     //the message itself that the user has sent
     message: v.string(),
   }),
+
   users: defineTable({
-    /* Clerk JWT Claims */
-
-    //user.full_name
-    name: v.optional(v.string()),
-
-    //user.primary_email_address
-    email: v.string(),
-
-    //user.image_url
-    picture: v.string(),
-
-    //user.username
-    nickname: v.string(),
-
-    //user.email_verified
-    email_verified: v.boolean(),
-
-    //user.updated_at
-    updated_at: v.string(),
-
-    //unique token
-    tokenIdentifier: v.string(),
-
-    // player stats
-    gamesPlayed: v.number(),
-    gamesWon: v.number(),
-    gamesLost: v.number(),
-    winRatio: v.number(),
-    loseRatio: v.number(),
-    xp: v.number(),
-    level: v.number(),
-    rank: v.string(),
-    avgScore: v.number(),
-    totalPoints: v.number(),
-    accuracyRatio: v.number(),
-    playtimeTotal: v.string(),
-    consecutiveLogin: v.optional(v.number()),
-    alliance: v.optional(v.id("alliance")),
-  }).index("by_token", ["tokenIdentifier"]),
-
-  modifiedUsers: defineTable({
     name: v.optional(v.string()),
     email: v.string(),
     email_verified: v.boolean(),
     tokenIdentifier: v.string(),
     consecutiveLogin: v.optional(v.number()),
-    playerData: v.object({
+    publicData: v.object({
       nickname: v.string(),
       picture: v.string(),
       updated_at: v.string(),
@@ -95,5 +55,6 @@ export default defineSchema({
     allianceTotalPoints: v.number(),
     allianceAccuracy: v.number(),
     alliancePlaytime: v.string(),
+    alliancePicture: v.string()
   }),
 });

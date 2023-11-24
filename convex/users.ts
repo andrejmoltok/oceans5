@@ -39,23 +39,25 @@ export const storeUser = mutation({
     return await ctx.db.insert("users", {
       name: identity.name!,
       email: identity.email!,
-      picture: identity.pictureUrl!,
-      nickname: identity.nickname!,
       email_verified: identity.emailVerified!,
-      updated_at: identity.updatedAt!,
       tokenIdentifier: identity.tokenIdentifier,
-      gamesPlayed: 0,
-      gamesWon: 0,
-      gamesLost: 0,
-      winRatio: 0,
-      loseRatio: 0,
-      xp: 0,
-      level: 1,
-      rank: "Seaman",
-      avgScore: 0,
-      totalPoints: 0,
-      accuracyRatio: 0,
-      playtimeTotal: "0",
+      publicData: {
+        nickname: identity.nickname!,
+        picture: identity.pictureUrl!,
+        updated_at: identity.updatedAt!,
+        gamesPlayed: 0,
+        gamesWon: 0,
+        gamesLost: 0,
+        winRatio: 0,
+        loseRatio: 0,
+        xp: 0,
+        level: 1,
+        rank: "Seaman",
+        avgScore: 0,
+        totalPoints: 0,
+        accuracyRatio: 0,
+        playtimeTotal: "0",
+      }
     });
   },
 });
@@ -70,20 +72,20 @@ export const readAllUsers = query({
 export const readUserByToken = query({
   args: {},
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await ctx.auth.getUserIdentity()!;
     if (!identity) {
-      // throw new Error("Called readUserByToken without authentication present");
-      return null;
+      throw new Error("Called readUserByToken without authentication present");
+      // return null;
     }
     const user = await ctx.db
       .query("users")
       .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier!)
+        q.eq("tokenIdentifier", identity?.tokenIdentifier!)
       )
       .unique();
     if (user !== null) {
-      if (user.tokenIdentifier.toString().split('|')[1] === identity.tokenIdentifier.toString().split('|')[1]) {
-        return user;
+      if (user.tokenIdentifier.toString().split('|')[1] === identity?.tokenIdentifier.toString().split('|')[1]) {
+        return user; // user.publicData ???
       }
     }
   },
