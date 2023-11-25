@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### A learning collab project
 
-Powered by [Convex.dev](https://convex.dev)
+Powered by FireBase
 
 ## Getting Started
 
