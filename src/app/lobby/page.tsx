@@ -2,8 +2,6 @@
 
 import styles from '@/styles/Lobby.module.css';
 import React, { useEffect, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
-import { useConvexAuth } from 'convex/react';
 
 import Chat from '@/components/Chat';
 import { io, Socket } from 'socket.io-client';
@@ -12,8 +10,6 @@ import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { RegistredPlayer } from '@/app/classes/RegistredPlayer';
 import { Guest } from '@/app/classes/Guest';
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
 
 
 let currentPlayer: Player;
@@ -39,16 +35,6 @@ export default function Lobby() {
     const [playerArray, setPlayerArray] = useState<Player[]>([]);
     const [chatMessages, setChatMessages] = useState<{ sender: Player, msg: string }[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
-    const [userDataObj, setUserDataObj] = useState<Object | null>(null);
-    const { isLoaded } = useUser();
-    const { isAuthenticated } = useConvexAuth();
-    const userData = useQuery(api.users.readUserByToken);
-
-    useEffect(() => {
-        if (isAuthenticated && userData) {
-            setUserDataObj(userData);
-        }
-    }, [isAuthenticated, userData]);
 
     const initSocket = (): Socket<any> => {
         const aSocket = io('http://localhost:3001/user');
@@ -82,7 +68,7 @@ export default function Lobby() {
     }
 
     useEffect(() => {
-        if (isLoaded) {
+        if () {
             // Create a new WebSocket connection
             const newSocket = initSocket();
 
@@ -95,7 +81,7 @@ export default function Lobby() {
                 }
             };
         }
-    }, [isLoaded]);
+    }, []);
 
     // Emit a 'lobby-chat' event and the currentPlayer/ the sender/: Player/ Guest or RegistredPlayer/
     // object and the message to the WebSocket server.

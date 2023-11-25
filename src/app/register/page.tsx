@@ -1,25 +1,11 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@clerk/nextjs';
-import { useMutation, useConvexAuth } from "convex/react";
-import { api } from "@/convex/_generated/api";
 
 export default function Register() {
-
-    const { isAuthenticated } = useConvexAuth();
-    const { isSignedIn } = useAuth();
-
     const router = useRouter();
 
-    const storeUser = useMutation(api.users.storeUser);
-
-
-    if (isSignedIn && isAuthenticated) {
-        storeUser()
-        router.push('/lobby')
-    }
 
     return (
         <>
