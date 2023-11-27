@@ -2,14 +2,12 @@
 
 import styles from '@/styles/Lobby.module.css';
 import React, { useEffect, useState } from 'react';
-
-import Chat from '@/components/Chat';
 import { io, Socket } from 'socket.io-client';
-
-import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { RegistredPlayer } from '@/app/classes/RegistredPlayer';
 import { Guest } from '@/app/classes/Guest';
+import Chat from '@/components/Chat';
+import PlayerList from '@/components/PlayerList';
 
 
 let currentPlayer: Player;
