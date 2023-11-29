@@ -1,0 +1,9 @@
+16:51:23.328 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+16:51:23.479 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
+16:51:37.015 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO com.firebase.core.namespace.NamespaceActor - oceans5-d491f-default-rtdb successfully activated FBKV (SurveyIdle(0)) wait: 78ms, init: 0ms
+16:51:37.228 [NamespaceSystem-blocking-namespace-operation-dispatcher-6] INFO com.firebase.core.namespace.StateManager - Namespace oceans5-d491f-default-rtdb status Active to Active
+17:00:31.741 [FirebaseWorkerPool-1-1] WARN com.firebase.core.persistence.backend.dummy.EmulatorMetadataPersistence - Multiple projectIds are not recommended in single project mode. Requested 
+namespace oceans5-d491f, but the emulator is configured for oceans5-d491f-default-rtdb. To 
+opt-out of single project mode add/set the singleProjectMode: false property in 
+the firebase.json emulators config. 
+17:00:31.747 [NamespaceSystem-akka.actor.default-dispatcher-11] INFO com.firebase.core.namespace.NamespaceActor - oceans5-d491f successfully activated FBKV (SurveyIdle(0)) wait: 3ms, init: 0ms

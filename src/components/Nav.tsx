@@ -4,10 +4,54 @@ import styles from '@/styles/Nav.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import {
+    onAuthStateChanged,
+    signInWithGoogle,
+    signOut
+} from '@/app/services/authService';
+import { getPlayerData, setPlayerData } from '@/app/services/databaseService';
+// import { getPlayerData, setPlayerData } from '@/app/services/firestoreService';
 
 const Nav = () => {
 
+    const [user, setUser] = useState<any>();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged((authUser: any) => {
+            console.log(authUser);
+            setUser(authUser);
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+    useEffect(() => {
+        onAuthStateChanged((authUser: any) => {
+            if (user === undefined) return;
+            if (user?.email !== authUser?.email) {
+                router.refresh();
+            }
+        });
+    }, [user]);
+
     const router = useRouter();
+
+    const handleSignOut = (event: any) => {
+        event.preventDefault();
+        signOut();
+    };
+
+    const handleSignIn = (event: any) => {
+        event.preventDefault();
+        signInWithGoogle().then(async(user: any) => {
+            const userData = await getPlayerData(user?.uid);
+            
+            if (!userData) {
+                await setPlayerData(user?.uid);
+            }
+        });
+    };
 
     return (
         <>
@@ -22,9 +66,24 @@ const Nav = () => {
                     <li className={styles.listitem}>Leaderboard</li>
                     <li className={styles.listitem}>How to Play</li>
                     <li className={styles.listitem}>About</li>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        {/* Next-Auth components */}
-                    </div>
+                    {user ? (
+                        <>
+                            <li>{user.displayName}</li>
+                            <li>
+                                <a href="#" onClick={handleSignOut}>
+                                    Sign Out
+                                </a>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                        <li>
+                            <a href="#" onClick={handleSignIn}>
+                                Sign In with Google
+                            </a>
+                        </li>
+                        </>
+                    )}
                 </ul>
             </div>
             <div className={styles.spacer}></div>
