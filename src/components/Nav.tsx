@@ -9,6 +9,7 @@ import {
     signOut
 } from '@/app/services/authService';
 import { getPlayerData, setPlayerData } from '@/app/services/databaseService';
+import Link from 'next/link';
 // import { getPlayerData, setPlayerData } from '@/app/services/firestoreService';
 
 const Nav = () => {
@@ -56,15 +57,19 @@ const Nav = () => {
         <>
             <div className={styles.navbar}>
                 <ul className={styles.navlist}>
-                    <li className={styles.logo} >
-                        <a href="/">
+                    <li>
+                        <Link className={styles.listitem} href="/" style={{ backgroundColor: 'white' }}>
                             <Image src="/oceans5.png" alt="Oceans5 logo with a medieval ship and text saying Oceans5" width={185} height={64} priority />
-                        </a>
+                        </Link>
                     </li>
-                    <li className={styles.listitem}><a href="/lobby" style={{ textDecoration: "none", color: '#79bedb' }}>Lobby</a></li>
-                    <li className={styles.listitem}>Leaderboard</li>
-                    <li className={styles.listitem}>How to Play</li>
-                    <li className={styles.listitem}>About</li>
+                    <li>
+                        <Link className={styles.listitem} href="/lobby">
+                            Lobby
+                        </Link>
+                    </li>
+                    <li><Link className={styles.listitem} href="/#">Leaderboard</Link></li>
+                    <li><Link className={styles.listitem} href="/#">How to Play</Link></li>
+                    <li><Link className={styles.listitem} href="/#">About</Link></li>
                     {user ? (
                         <>
                             <li className={styles.listitem}>
