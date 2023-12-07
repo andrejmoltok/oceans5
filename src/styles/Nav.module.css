@@ -34,6 +34,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  /* cursor: pointer; */
 }
 
 .logo {
@@ -50,6 +51,6 @@
   background-color: #9f6210;
 }
 
-.navlist > .listitem:nth-child(-n + 5) {
+.navlist > .listitem:nth-child(-n + 7) {
   cursor: pointer;
 }

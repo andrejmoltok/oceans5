@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import Chat from '@/components/Chat';
 import { io, Socket } from 'socket.io-client';
 
+import { auth } from '@/app/utilities/fireBaseConfig';
+
 import PlayerList from '@/components/PlayerList';
 import { Player } from '@/app/classes/Player';
 import { RegistredPlayer } from '@/app/classes/RegistredPlayer';
@@ -21,7 +23,7 @@ const guestOrRegistred = (userData: any, socketId: string): Player => {
     if (userData) {
         // This is the goal:
         // player = userData.public_data as RegistredPlayer;
-        player = RegistredPlayer.createPlayer(userData?.publicData!, userData?._id);
+        player = RegistredPlayer.createPlayer(userData, userData?._uid);
         // player = userData?.publicData as RegistredPlayer;
     } else {
         player = new Guest(socketId);
@@ -45,7 +47,7 @@ export default function Lobby() {
             // If the user is signed in, it creates a RegistredPlayer object
             // from the fetched data from the database and returns with it.
             // If the user is not signed in, it creates and returns with a Guest object.
-            currentPlayer = guestOrRegistred(userDataObj, aSocket.id);
+            currentPlayer = guestOrRegistred(auth.currentUser, aSocket.id);
 
             // Emit a 'player-joined' event and the currentPlayer: Player /Guest or RegistredPlayer/
             // object to the WebSocket server.
@@ -68,19 +70,19 @@ export default function Lobby() {
     }
 
     useEffect(() => {
-        if () {
-            // Create a new WebSocket connection
-            const newSocket = initSocket();
 
-            isEverythingLoaded = true;
+        // Create a new WebSocket connection
+        const newSocket = initSocket();
 
-            // Cleanup function to disconnect the socket on component unmount
-            return () => {
-                if (newSocket) {
-                    newSocket.disconnect();
-                }
-            };
-        }
+        isEverythingLoaded = true;
+
+        // Cleanup function to disconnect the socket on component unmount
+        return () => {
+            if (newSocket) {
+                newSocket.disconnect();
+            }
+        };
+
     }, []);
 
     // Emit a 'lobby-chat' event and the currentPlayer/ the sender/: Player/ Guest or RegistredPlayer/
