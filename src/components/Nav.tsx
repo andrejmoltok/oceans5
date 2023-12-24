@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import {
     onAuthStateChanged,
+    signInWithGoogle,
     signOut
 } from '@/app/services/authService';
 import { getPlayerData, setPlayerData } from '@/app/services/databaseService';
@@ -15,7 +16,6 @@ import Link from 'next/link';
 const Nav = () => {
 
     const [user, setUser] = useState<any>();
-    const router = useRouter();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged((authUser: any) => {
@@ -34,23 +34,24 @@ const Nav = () => {
                 router.refresh();
             }
         });
-    }, [user, router]);
+    }, [user]);
 
-
+    const router = useRouter();
 
     const handleSignOut = (event: any) => {
         event.preventDefault();
         signOut();
     };
 
-    const handleSignIn = async (event: any) => {
+    const handleSignIn = (event: any) => {
         event.preventDefault();
-        await getPlayerData(user?.uid);
-
-        if (!user) {
-            await setPlayerData(user?.uid);
-        }
-
+        signInWithGoogle().then(async(user: any) => {
+            const userData = await getPlayerData(user?.uid);
+            
+            if (!userData) {
+                await setPlayerData(user?.uid);
+            }
+        });
     };
 
     return (
@@ -72,27 +73,20 @@ const Nav = () => {
                     <li><Link className={styles.listitem} href="/#">About</Link></li>
                     {user ? (
                         <>
-                            <li className={styles.listitem}>
-                                {user.displayName}
-                            </li>
-                            <li className={styles.listitem}>
-                                <span onClick={handleSignOut} style={{ textDecoration: "none", color: '#79bedb' }}>
+                            <li>{user.displayName}</li>
+                            <li>
+                                <a href="#" onClick={handleSignOut}>
                                     Sign Out
-                                </span>
+                                </a>
                             </li>
                         </>
                     ) : (
                         <>
-                            <li className={styles.listitem}>
-                                <span onClick={() => { router.push("/signin") }} style={{ textDecoration: "none", color: '#79bedb' }}>
-                                    Sign In
-                                </span>
-                            </li>
-                            <li className={styles.listitem}>
-                                <span onClick={() => { router.push("/signup") }} style={{ textDecoration: "none", color: '#79bedb' }}>
-                                    Sign Up
-                                </span>
-                            </li>
+                        <li>
+                            <a href="#" onClick={handleSignIn}>
+                                Sign In with Google
+                            </a>
+                        </li>
                         </>
                     )}
                 </ul>
